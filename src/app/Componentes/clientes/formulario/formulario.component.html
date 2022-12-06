@@ -1,0 +1,75 @@
+<div class="contenedor">
+    <div class="header">
+        <app-header></app-header>
+    </div>
+    <div class="contenido contenidoForm">
+        <ul class="alert alert-danger" *ngIf="errores?.length > 0">
+            <li *ngFor="let err of errores">
+                {{ err }}
+            </li>
+        </ul>
+        <form class="formulario" #clienteForm="ngForm">
+            <div class="titulo">
+                <h1>{{titulo}}</h1>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Ingrese nombres" [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel" required minlength="4"> <!--  required minlength="4" -->
+              <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                <div *ngIf="nombre.hasError('required')">
+                    <p class="alert alert-danger">El nombre es requerido</p> 
+                </div>
+                <div *ngIf="nombre.hasError('minlength')">
+                    <p class="alert alert-danger">El nombre debe contener minimo 4 letras</p> 
+                </div>
+              </div>
+            </div>
+        
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Ingrese Apellidos" [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel" required minlength="3"> <!--  required minlength="3" -->
+                <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+                    <div *ngIf="apellido.hasError('required')">
+                        <p class="alert alert-danger">El apellido es requerido</p> 
+                    </div>
+                    <div *ngIf="apellido.hasError('minlength')">
+                        <p class="alert alert-danger">El apellido debe contener minimo 3 letras</p> 
+                    </div>
+                </div>
+            </div>
+        
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Ingrese Email" [(ngModel)]="cliente.email" name="email" #email="ngModel" required email> <!--  required email -->
+                <div *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.hasError('required')">
+                        <p class="alert alert-danger">El email es requerido</p> 
+                    </div>
+                    <div *ngIf="email.hasError('email')">
+                        <p class="alert alert-danger">email invalido</p> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="date" class="form-control" placeholder="Ingrese fecha" [(ngModel)]="cliente.createAt" name="createAt" #createAt="ngModel" required> <!--  required email -->
+                <div *ngIf="createAt.invalid && (createAt.dirty || createAt.touched)">
+                    <div *ngIf="createAt.hasError('required')">
+                        <p class="alert alert-danger">La fecha es requerida</p> 
+                    </div>
+                    <div *ngIf="createAt.hasError('createAt')">
+                        <p class="alert alert-danger">Fecha invalida</p> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn w-100" role="button" (click)="create()" *ngIf="!cliente.id else updateButton" [disabled]="!clienteForm.form.valid">Guardar</button>
+                <ng-template #updateButton>
+                    <button class="btn w-100" role="button" (click)="update()" [disabled]="!clienteForm.form.valid">Editar</button>
+                </ng-template>
+            </div>
+        </form>
+    </div>
+    <div class="footer">
+        <app-footer></app-footer>
+    </div>
+</div>
+

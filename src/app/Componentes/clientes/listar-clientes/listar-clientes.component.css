@@ -1,0 +1,46 @@
+.contenido{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mensaje{
+    text-align: center;
+    color: white;
+    background: #636eb0;
+}
+
+.contenido > .btn{
+    height: 60px;
+}
+
+.contenido .card-body{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card{
+    width: 100%;
+}
+
+.form-group > button{
+    background: #3F51B5;
+    height: 40px;
+    color: white;
+    transition: .5s;
+}
+
+.form-group > button:hover{
+    background: #b53fb3;
+}
+
+.btn-edit, .btn-ver{
+    background: #3F51B5;
+    color: white;
+}
+.btn-delete{
+    background: #b53fb3;
+    color: white;
+}

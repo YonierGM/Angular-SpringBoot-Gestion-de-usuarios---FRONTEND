@@ -1,0 +1,44 @@
+.form-control{
+    border: none;
+    border-bottom: 1px solid #3F51B5;
+    transition: .3s;
+    border-radius: 0;
+}
+
+.form-control:focus{
+    border-bottom: 1px solid #b53fb3;
+    box-shadow: none;
+    border-radius: 5px;
+}
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group > button{
+    background: #3F51B5;
+    height: 50px;
+    color: white;
+    transition: .5s;
+}
+
+.form-group > button:hover{
+    background: #b53fb3;;
+}
+
+.card-header{
+    width: 100%;
+}
+
+.titulo h1{
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+.contenidoForm{
+    width: 50%;
+    margin: auto;
+}

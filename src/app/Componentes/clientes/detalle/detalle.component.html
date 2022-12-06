@@ -1,0 +1,33 @@
+<section class="contenido">
+
+    <div class="card" *ngIf="cliente">
+        <div class="card-header" *ngIf="cliente.foto != null">
+            <img class="card-img-top" src="{{urlBaseImage}}{{cliente.foto}}" alt="Card image cap">
+        </div>
+
+        <div class="card-header" *ngIf="cliente.foto == null">
+            <img class="card-img-top" src="https://www.kindpng.com/picc/m/150-1503934_computer-icons-scalable-vector-graphics-user-profile-user.png" alt="Card image cap">
+        </div>
+        
+        <div class="card-body">
+          <h2 class="card-title">{{cliente.nombre}} {{cliente.apellido}}</h2>
+          <p class="card-text">{{cliente.email}}</p>
+          <p class="card-text">{{cliente.createAt}}</p>
+         
+            <div class="input-group mb-3">
+                <input (change)="seleccionarFoto($event)" [(ngModel)]="file" #asFile type="file" class="form-control" id="inputGroupFile01">
+            </div>
+
+            <button (click)="subirFoto()" class="btn btn-info" [disabled]="!file">Subir</button>
+            <a class="nav-link" aria-current="page" routerLink="/clientes/listar">Home</a>
+
+            <div class="progress" *ngIf="progreso > 0">
+                <div class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-label="Example with label" [ngStyle]="{'width': progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">
+                    {{progreso}}%
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+</section>
