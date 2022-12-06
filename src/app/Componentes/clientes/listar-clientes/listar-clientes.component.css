@@ -44,3 +44,16 @@
     background: #b53fb3;
     color: white;
 }
+
+.columImg{
+    width: 80px;
+    height: 50px;
+    
+    cursor: pointer;
+}
+
+.img img{
+    object-fit: cover;
+    border-radius: 10px;
+    transition: .2s;
+}

@@ -1,3 +1,4 @@
+
 <div class="contenedor">
     <div class="header">
         <app-header></app-header>
@@ -13,7 +14,7 @@
             <table class="table">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">Perfil</th>
                     <th scope="col">Nombres</th>
                     <th scope="col">Apellidos</th>
                     <th scope="col">Email</th>
@@ -25,7 +26,15 @@
             </thead>
             <tbody>
                 <tr *ngFor="let cliente of clientes">
-                    <th>{{cliente.id}}</th>
+                    <th class="columImg" [routerLink]="['/clientes/ver/', cliente.id]">
+                        <div class="card-header img" *ngIf="cliente.foto != null">
+                            <img class="card-img-top" src="{{urlBaseImage}}{{cliente.foto}}" alt="Card image cap">
+                        </div>
+                
+                        <div class="card-header img" *ngIf="cliente.foto == null">
+                            <img class="card-img-top" src="https://www.kindpng.com/picc/m/150-1503934_computer-icons-scalable-vector-graphics-user-profile-user.png" alt="Card image cap">
+                        </div>
+                    </th>
                     <td>{{cliente.nombre | uppercase }}</td>
                     <td>{{cliente.apellido | uppercase}}</td>
                     <td>{{cliente.email | lowercase}}</td>

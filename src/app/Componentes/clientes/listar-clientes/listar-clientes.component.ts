@@ -12,9 +12,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ListarClientesComponent implements OnInit, OnChanges {
 
+  urlBaseImage: String = "http://localhost:8080/api/uploads/img/";
+
   mostrar: boolean = false;
   clientes: Cliente[] = []
   paginador: any;
+
+  detalle = 0;
 
   constructor(private clienteService: ServiceClienteService,
     private activatedRoute: ActivatedRoute) { }
@@ -44,7 +48,7 @@ export class ListarClientesComponent implements OnInit, OnChanges {
         tap(response => {
           console.log("clienteC: tap");
           (response.content as Cliente[]).forEach(cliente => {
-            console.log(cliente.nombre);
+            console.log(cliente.foto);
           });
         })
       ).subscribe(response => {
