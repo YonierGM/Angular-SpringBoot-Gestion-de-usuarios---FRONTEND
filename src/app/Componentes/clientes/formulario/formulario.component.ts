@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Cliente } from '../cliente';
 import { ServiceClienteService } from '../services/service-cliente.service';
 import Swal from 'sweetalert2'
+import { ServiceRegionService } from '../../regiones/services/service-region.service';
+import { Region } from '../../regiones/region';
 
 @Component({
   selector: 'app-formulario',
@@ -10,17 +12,24 @@ import Swal from 'sweetalert2'
   styleUrls: ['./formulario.component.css']
 })
 export class FormularioComponent implements OnInit {
-  private nombre:any ="";
-  private apellido:any ="";
-  private email:any ="";
-  private createAt:any ="";
-  private foto:any ="";
+  nombre?:string;
+  apellido?:string;
+  email?:string;
+  createAt?:string;
+  region?:string;
+  foto?:string;
 
-  public cliente: Cliente = new Cliente(this.nombre, this.apellido, this.email, this.createAt, this.foto);
-  public titulo:String = "Crear Cliente";
-  public errores: any;
+  cliente: Cliente = new Cliente();
+  regiones: Region[] = [];
 
-  constructor(private clienteService: ServiceClienteService,
+  titulo:String = "Crear Cliente";
+  errores: any;
+
+  constructor(
+
+  private clienteService: ServiceClienteService,
+  private ServiceRegionService: ServiceRegionService,
+
   private router: Router,
   private activatedRoute: ActivatedRoute) {
     this.errores = [];
@@ -28,6 +37,15 @@ export class FormularioComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarCliente();
+
+    this.ServiceRegionService.getRegiones().subscribe(regiones  => this.regiones = regiones)
+  }
+
+  compareRegion(o1: Region, o2: Region): boolean {
+    if(o1 == undefined && o2 == undefined){
+      return true;
+    }
+    return o1 === null || o2 === null || o1 === undefined || o2 === undefined? false: o1.id === o2.id;
   }
 
   public cargarCliente(): void{
@@ -40,41 +58,46 @@ export class FormularioComponent implements OnInit {
     })
   }
   
-  public create(): void{
-    this.clienteService.create(this.cliente).subscribe(
-      res => {
-        this.router.navigate([''])
+  public create(): void {
+      this.clienteService.create(this.cliente).subscribe({
+        next: (v) => {
+          this.router.navigate([''])
 
+          Swal.fire({
+            title: ''+this.cliente.nombre,
+            text: 'Cliente '+this.cliente.nombre + ' creado con exito',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: '#3F51B5'
+          })
+        }, 
+        error: (e) => {
+          this.errores = e.error.errors as string[];
+          console.error(e)
+        },
+
+        complete: () => console.info('complete') 
+    })
+  }
+
+  update(): void{
+    this.clienteService.update(this.cliente)
+    .subscribe({
+      next: (v) => {
+        this.router.navigate([''])
         Swal.fire({
           title: ''+this.cliente.nombre,
-          text: 'Cliente '+this.cliente.nombre + ' creado con exito',
+          text: 'Cliente '+this.cliente.nombre + ' actualizado con exito',
           icon: 'success',
           confirmButtonText: 'Ok',
           confirmButtonColor: '#3F51B5'
         })
       },
-      err => {
-        this.errores = err.error.errors as string[];
-      }
-      );
-  }
-
-  update(): void{
-    this.clienteService.update(this.cliente)
-    .subscribe( cliente => {
-      this.router.navigate([''])
-
-      Swal.fire({
-        title: ''+this.cliente.nombre,
-        text: 'Cliente '+this.cliente.nombre + ' actualizado con exito',
-        icon: 'success',
-        confirmButtonText: 'Ok',
-        confirmButtonColor: '#3F51B5'
-      })
-    },
-      err => {
-        this.errores = err.error.errors as string[];
-      }
-    )
+      error: (e) => {
+        this.errores = e.error.errors as string[];
+        console.error(e)
+      },
+      complete: () => console.info('complete') 
+    })
   }
 }

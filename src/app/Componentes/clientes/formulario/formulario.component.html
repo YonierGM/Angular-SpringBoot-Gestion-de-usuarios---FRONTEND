@@ -13,31 +13,34 @@
                 <h1>{{titulo}}</h1>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Ingrese nombres" [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel" required minlength="4"> <!--  required minlength="4" -->
+              <input type="text" class="form-control" placeholder="Ingrese nombres" [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel" required> <!--  required minlength="4" -->
               <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
                 <div *ngIf="nombre.hasError('required')">
                     <p class="alert alert-danger">El nombre es requerido</p> 
                 </div>
-                <div *ngIf="nombre.hasError('minlength')">
+                <!-- <div *ngIf="nombre.hasError('minlength')">
                     <p class="alert alert-danger">El nombre debe contener minimo 4 letras</p> 
-                </div>
+                </div> -->
               </div>
             </div>
         
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Ingrese Apellidos" [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel" required minlength="3"> <!--  required minlength="3" -->
+                <input type="text" class="form-control" placeholder="Ingrese Apellidos" [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel" required> <!--  required minlength="3" -->
+                
                 <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
                     <div *ngIf="apellido.hasError('required')">
                         <p class="alert alert-danger">El apellido es requerido</p> 
                     </div>
-                    <div *ngIf="apellido.hasError('minlength')">
+                    <!-- <div *ngIf="apellido.hasError('minlength')">
                         <p class="alert alert-danger">El apellido debe contener minimo 3 letras</p> 
-                    </div>
+                    </div> -->
                 </div>
             </div>
         
-              <div class="form-group">
-                <input type="text" class="form-control" placeholder="Ingrese Email" [(ngModel)]="cliente.email" name="email" #email="ngModel" required email> <!--  required email -->
+            <div class="form-group">
+
+                <input type="text" class="form-control" placeholder="Ingrese Email" [(ngModel)]="cliente.email" name="email" #email="ngModel" email required> <!--  required email -->
+                
                 <div *ngIf="email.invalid && (email.dirty || email.touched)">
                     <div *ngIf="email.hasError('required')">
                         <p class="alert alert-danger">El email es requerido</p> 
@@ -49,7 +52,29 @@
             </div>
 
             <div class="form-group">
+
                 <input type="date" class="form-control" placeholder="Ingrese fecha" [(ngModel)]="cliente.createAt" name="createAt" #createAt="ngModel" required> <!--  required email -->
+                
+                <div *ngIf="createAt.invalid && (createAt.dirty || createAt.touched)">
+                    <div *ngIf="createAt.hasError('required')">
+                        <p class="alert alert-danger">La fecha es requerida</p> 
+                    </div>
+                    <div *ngIf="createAt.hasError('createAt')">
+                        <p class="alert alert-danger">Fecha invalida</p> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <select class="form-select" [compareWith]="compareRegion" [(ngModel)]="cliente.region" name="region" #region="ngModel" required>
+                    <option [ngValue]="undefined">--- elije una región ---</option>
+                    <option *ngFor="let region of regiones" [ngValue]="region">
+                        {{region.nombre}}
+                    </option>
+
+                </select>
+                
                 <div *ngIf="createAt.invalid && (createAt.dirty || createAt.touched)">
                     <div *ngIf="createAt.hasError('required')">
                         <p class="alert alert-danger">La fecha es requerida</p> 

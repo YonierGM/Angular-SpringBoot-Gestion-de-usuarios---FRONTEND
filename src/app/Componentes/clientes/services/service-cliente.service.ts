@@ -11,8 +11,11 @@ import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common
 @Injectable({
   providedIn: 'root'
 })
+
 export class ServiceClienteService {
   private urlApi:string ='http://localhost:8080/api/clientes';
+  private urlRegiones:string ='http://localhost:8080/api/regiones';
+  
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
 
   constructor(private http: HttpClient,
@@ -31,16 +34,19 @@ export class ServiceClienteService {
   }
 
   create(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(this.urlApi, cliente, {headers: this.httpHeaders}).pipe(
+    return this.http.post<Cliente[]>(this.urlApi, cliente, {headers: this.httpHeaders})
+    .pipe(
+      map((response: any) => response.cliente as Cliente),
       catchError(e => {
 
         if(e.status == 400){
-          return throwError(e);
+          console.log("error 400")
+          return throwError(() => e);
         }
 
-        console.log(e.error.mensaje);
+        console.error(e.error.mensaje);
         swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
+        return throwError(() => e)
       })
     );
 
@@ -51,7 +57,7 @@ export class ServiceClienteService {
         console.log(e.error.mensaje);
         swal.fire('Error al editar', e.error.mensaje, 'error');
         this.router.navigate(['']);
-        return throwError(e);
+        return throwError(() => e)
       })
     );
   }
@@ -61,13 +67,13 @@ export class ServiceClienteService {
       catchError(e => {
 
         if(e.status == 400){
-          return throwError(e);
+          return throwError(() => e)
         }
         
         console.log(e.error.mensaje);
         swal.fire(e.error.mensaje, e.error.error, 'error');
         this.router.navigate(['']);
-        return throwError(e);
+        return throwError(() => e)
       })
     );
   }
@@ -78,7 +84,7 @@ export class ServiceClienteService {
         console.log(e.error.mensaje);
         swal.fire(e.error.mensaje, e.error.error, 'error');
         this.router.navigate(['']);
-        return throwError(e);
+        return throwError(() => e)
       })
     );
   }

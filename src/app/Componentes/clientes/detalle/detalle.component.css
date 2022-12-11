@@ -32,6 +32,11 @@
     width: 100%;
 }
 
+.botones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 /* Progressbar ///////////////////// */
 .progress{

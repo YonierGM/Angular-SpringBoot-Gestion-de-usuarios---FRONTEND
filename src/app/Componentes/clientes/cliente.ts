@@ -1,16 +1,15 @@
+import { Region } from '../regiones/region';
 export class Cliente {
-    id?: number;
-    nombre: string;
-    apellido: string;
-    createAt: string;
-    email: string;
-    foto: string;
 
-    constructor(nombre: string, apellido: string, createAt: string, email: string, foto: string){
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.createAt = createAt;
-        this.email = email;
-        this.foto = foto;
+    constructor(
+        public nombre?: string,
+        public apellido?: string,
+        public createAt?: string,
+        public email?: string,
+        public foto?: string,
+        public region?: Region,
+        
+        public id?: number
+    ){
     }
 }

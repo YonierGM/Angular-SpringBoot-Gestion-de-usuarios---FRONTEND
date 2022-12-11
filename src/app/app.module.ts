@@ -25,6 +25,8 @@ import { PaginatorComponent } from './Componentes/paginator/paginator.component'
 registerLocaleData( localeES, 'es');
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetalleComponent } from './Componentes/clientes/detalle/detalle.component';
+import { ListarComponent } from './Componentes/regiones/listar/listar.component';
+import { CrearComponent } from './Componentes/regiones/crear/crear.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { DetalleComponent } from './Componentes/clientes/detalle/detalle.compone
     ListarClientesComponent,
     FormularioComponent,
     PaginatorComponent,
-    DetalleComponent
+    DetalleComponent,
+    ListarComponent,
+    CrearComponent
   ],
   imports: [
     BrowserModule,
