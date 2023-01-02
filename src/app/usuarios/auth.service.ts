@@ -8,12 +8,14 @@ import { Usuario } from './usuario';
 })
 export class AuthService {
 
-  private _usuario: any;
+  private _usuario!: Usuario;
   private _token: any;
 
   constructor(
     private http: HttpClient
-  ) {}
+  ) {
+
+  }
 
   public get usuario(): Usuario {
     if(this._usuario != null){
@@ -22,7 +24,7 @@ export class AuthService {
       this._usuario = JSON.parse(sessionStorage.getItem('usuario')!) as Usuario;
       return this._usuario;
     }
-    return new Usuario(this._usuario.nombre, this._usuario.apellido,this._usuario.email, this._usuario.username,this._usuario.username, this._usuario.roles);
+    return new Usuario();
 
   }
 
@@ -58,8 +60,7 @@ export class AuthService {
 
   guardarUsuario(accessToken: string): void {
     let payload = this.obtenerDatosToken(accessToken);
-    
-    this._usuario = new Usuario(this._usuario.nombre, this._usuario.apellido,this._usuario.email, this._usuario.username,this._usuario.username);
+    this._usuario = new Usuario();
 
     this._usuario.nombre = payload.nombre;
     this._usuario.apellido = payload.apellido;
