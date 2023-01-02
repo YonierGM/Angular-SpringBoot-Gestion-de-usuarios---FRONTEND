@@ -39,6 +39,10 @@ export class ServiceClienteService {
       map((response: any) => response.cliente as Cliente),
       catchError(e => {
 
+        if(this.isNoAutorizado(e)){
+          return throwError(() => e)
+        }
+
         if(e.status == 400){
           console.log("error 400")
           return throwError(() => e);
@@ -54,8 +58,13 @@ export class ServiceClienteService {
   getCliente(id: number): Observable<Cliente> {
     return this.http.get<Cliente>(`${this.urlApi}/${id}`).pipe(
       catchError(e => {
+
+        if(this.isNoAutorizado(e)){
+          return throwError(() => e)
+        }
+
         console.log(e.error.mensaje);
-        swal.fire('Error al editar', e.error.mensaje, 'error');
+        swal.fire('No se pudo mostrar al cliente', e.error.mensaje, 'error');
         this.router.navigate(['']);
         return throwError(() => e)
       })
@@ -66,12 +75,17 @@ export class ServiceClienteService {
     return this.http.put<Cliente>(`${this.urlApi}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
       catchError(e => {
 
+        if(this.isNoAutorizado(e)){
+          return throwError(() => e)
+        }
+
         if(e.status == 400){
           return throwError(() => e)
         }
         
         console.log(e.error.mensaje);
         swal.fire(e.error.mensaje, e.error.error, 'error');
+        
         this.router.navigate(['']);
         return throwError(() => e)
       })
@@ -89,7 +103,7 @@ export class ServiceClienteService {
     );
   }
 
-  subirFoto(archivo: File, id:any): Observable<HttpEvent<{}>>{
+  subirFoto(archivo: File, id:any): Observable<HttpEvent<any>>{
 
     let formData = new FormData();
     formData.append("archivo", archivo);
@@ -97,11 +111,21 @@ export class ServiceClienteService {
 
     const req = new HttpRequest('POST',`${this.urlApi}/upload`, formData,{
       reportProgress: true
-
     });
 
-    return this.http.request(req);
+    return this.http.request(req).pipe(
+      catchError(e => {
+        this.isNoAutorizado(e);
+        return throwError(() => e)
+      })
+    )
   }
 
-
+  private isNoAutorizado(e: any): boolean{
+    if(e.status== 401 || e.status== 403){ // codigo 401 Unauthorized - 403 acceso denegado
+      this.router.navigate(['/login'])
+      return true;
+    }
+    return false;
+  }
 }

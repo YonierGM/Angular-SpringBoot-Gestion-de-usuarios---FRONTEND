@@ -18,7 +18,12 @@ export class ServiceRegionService {
     private router: Router) { }
 
     getRegiones(): Observable<Region[]> {
-      return this.http.get<Region[]>(this.urlApi)
+      return this.http.get<Region[]>(this.urlApi).pipe(
+        catchError(e => {
+          this.isNoAutorizado(e);
+          return throwError(() => e)
+        })
+      )
     }
 
   create(region: Region): Observable<Region> {
@@ -72,5 +77,13 @@ export class ServiceRegionService {
         return throwError(e);
       })
     );
+  }
+
+  private isNoAutorizado(e: any): boolean{
+    if(e.status== 401 || e.status== 403){ // codigo 401 Unauthorized - 403 acceso denegado
+      this.router.navigate(['/login'])
+      return true;
+    }
+    return false;
   }
 }

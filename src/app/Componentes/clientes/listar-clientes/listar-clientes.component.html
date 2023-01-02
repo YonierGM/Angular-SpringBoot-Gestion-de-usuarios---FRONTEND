@@ -28,11 +28,11 @@
                 <tr *ngFor="let cliente of clientes">
                     <th class="columImg" [routerLink]="['/clientes/ver/', cliente.id]">
                         <div class="card-header img" *ngIf="cliente.foto">
-                            <img class="card-img-top" src="{{urlBaseImage}}{{cliente.foto}}" alt="Card image cap">
+                            <img class="card-img-top perfil" alt="Perfil" src="{{urlBaseImage}}{{cliente.foto}}" alt="Card image cap">
                         </div>
                 
                         <div class="card-header img" *ngIf="!cliente.foto">
-                            <img class="card-img-top" src="https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png" alt="Card image cap">
+                            <img class="card-img-top perfil" src="https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png" alt="Card image cap">
                         </div>
                     </th>
                     <td>{{cliente.nombre | uppercase }}</td>

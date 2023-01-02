@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetalleComponent } from './Componentes/clientes/detalle/detalle.component';
 import { ListarComponent } from './Componentes/regiones/listar/listar.component';
 import { CrearComponent } from './Componentes/regiones/crear/crear.component';
+import { LoginComponent } from './usuarios/login.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { CrearComponent } from './Componentes/regiones/crear/crear.component';
     PaginatorComponent,
     DetalleComponent,
     ListarComponent,
-    CrearComponent
+    CrearComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

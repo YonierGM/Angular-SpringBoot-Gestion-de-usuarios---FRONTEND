@@ -1,0 +1,19 @@
+<app-header></app-header>
+<section class="contenedor">
+    <section class="formulario">
+        <h1>{{titulo}}</h1>
+      <form class="form">
+          <div class="form-group">
+            <input type="text" name="username" class="form-control" placeholder="username" [(ngModel)]="usuario.username">
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" class="form-control" placeholder="Contraseña" [(ngModel)]="usuario.password">
+          </div>
+          <button type="submit" class="btn w-100 mt-2" (click)="login()">Ingresar</button>
+      </form>
+    </section>
+  
+      <aside class="aside">
+        <img src=".../../../../../assets/images/fondoAside.jpg" alt="">
+      </aside>
+  </section>
