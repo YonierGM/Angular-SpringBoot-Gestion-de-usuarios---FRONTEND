@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { map, catchError, tap } from 'rxjs/operators';
 
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { AuthService } from '../../../usuarios/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,14 +19,16 @@ export class ServiceClienteService {
   
   private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
 
-  constructor(private http: HttpClient,
-    private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    public authService: AuthService
+    ) { }
 
   getClientes(page: number): Observable<any> {
     return this.http.get(this.urlApi + '/page/' + page)
     .pipe(
       tap((res: any) =>  {
-        console.log("clienteService: Tap 1");
         (res.content as Cliente[]).forEach(cliente => {
           console.log(cliente.nombre)
         })
@@ -34,7 +37,7 @@ export class ServiceClienteService {
   }
 
   create(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente[]>(this.urlApi, cliente, {headers: this.httpHeaders})
+    return this.http.post<Cliente[]>(this.urlApi, cliente, { headers: this.agregarAuthorizationHeader() })
     .pipe(
       map((response: any) => response.cliente as Cliente),
       catchError(e => {
@@ -55,8 +58,9 @@ export class ServiceClienteService {
     );
 
   }
+
   getCliente(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`${this.urlApi}/${id}`).pipe(
+    return this.http.get<Cliente>(`${this.urlApi}/${id}`, {headers: this.agregarAuthorizationHeader()}).pipe(
       catchError(e => {
 
         if(this.isNoAutorizado(e)){
@@ -72,7 +76,7 @@ export class ServiceClienteService {
   }
 
   update(cliente: Cliente): Observable<Cliente>{
-    return this.http.put<Cliente>(`${this.urlApi}/${cliente.id}`, cliente, {headers: this.httpHeaders}).pipe(
+    return this.http.put<Cliente>(`${this.urlApi}/${cliente.id}`, cliente, { headers: this.agregarAuthorizationHeader() }).pipe(
       catchError(e => {
 
         if(this.isNoAutorizado(e)){
@@ -93,11 +97,17 @@ export class ServiceClienteService {
   }
 
   delete(id?: number): Observable<Cliente> {
-    return this.http.delete<Cliente>(`${this.urlApi}/${id}`, {headers: this.httpHeaders}).pipe(
+    return this.http.delete<Cliente>(`${this.urlApi}/${id}`, { headers: this.agregarAuthorizationHeader() }).pipe(
+      
       catchError(e => {
-        console.log(e.error.mensaje);
-        swal.fire(e.error.mensaje, e.error.error, 'error');
-        this.router.navigate(['']);
+        
+        if(e.status == 403){
+          swal.fire('Acceso denegado', `Hola ${this.authService.usuario.username} no tienes acceso a este recurso`, 'error');
+        }else{
+
+          swal.fire(e.error.mensaje, e.error.error, 'error');
+          this.router.navigate(['/clientes/listar']);
+        }
         return throwError(() => e)
       })
     );
@@ -109,8 +119,15 @@ export class ServiceClienteService {
     formData.append("archivo", archivo);
     formData.append("id",id);
 
+    let httpHeaders =  new HttpHeaders();
+    let token = this.authService.token;
+    if(token != null){
+      httpHeaders = httpHeaders.append('Authorization', 'Bearer ' + token);
+    }
+
     const req = new HttpRequest('POST',`${this.urlApi}/upload`, formData,{
-      reportProgress: true
+      reportProgress: true,
+      headers: httpHeaders
     });
 
     return this.http.request(req).pipe(
@@ -121,9 +138,30 @@ export class ServiceClienteService {
     )
   }
 
+  private agregarAuthorizationHeader(){
+    let token = this.authService.token;
+    if(token != null ){
+      return this.httpHeaders.append('Authorization', 'Bearer ' + token);
+    }
+    return this.httpHeaders;
+  }
+
   private isNoAutorizado(e: any): boolean{
-    if(e.status== 401 || e.status== 403){ // codigo 401 Unauthorized - 403 acceso denegado
+    if(e.status == 401 ){ // codigo 401 Unauthorized
+
+      //Cerrar sesion cuando haya expirado el token
+      if(this.authService.isAuthenticated()){
+        this.authService.logout();
+      }
+
+      swal.fire('Acceso','Por favor inicie sesion', 'warning')
       this.router.navigate(['/login'])
+      return true;
+    }
+
+    if(e.status == 403){ // codigo 401 Unauthorized - 403 acceso denegado
+      swal.fire('Acceso denegado', `Hola ${this.authService.usuario.username} no tienes acceso a este recurso`, 'warning')
+      this.router.navigate(['/clientes/listar'])
       return true;
     }
     return false;

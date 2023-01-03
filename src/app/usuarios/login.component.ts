@@ -12,6 +12,7 @@ import swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
   titulo: string = "Iniciar sesion";
+
   usuario: Usuario;
 
   username: string ="";
@@ -25,11 +26,16 @@ export class LoginComponent implements OnInit {
     private authService : AuthService,
     private router: Router
   ) { 
+
     this.usuario = new Usuario();
   }
 
   ngOnInit(): void {
-  }
+    // if(this.authService.isAuthenticated()){
+    //   swal.fire('Login',`Hola ${this.authService.usuario.username} Bienvenido(a)`,'info');
+    //   this.router.navigate(['/clientes/listar']);
+    // }
+  } 
 
   login(): void {
     console.log(this.usuario)
@@ -48,7 +54,7 @@ export class LoginComponent implements OnInit {
 
         let usuario = this.authService.usuario;
 
-        this.router.navigate(['/clientes'])
+        this.router.navigate(['/clientes/listar'])
         swal.fire('Login',`hola ${usuario.username}, has iniciado sesion `,'success')
       }, 
       error: (e) => {

@@ -5,6 +5,7 @@ import { ServiceClienteService } from '../services/service-cliente.service';
 import Swal from 'sweetalert2'
 import { HttpEventType } from '@angular/common/http';
 import { Cliente } from '../cliente';
+import { AuthService } from '../../../usuarios/auth.service';
 @Component({
   selector: 'app-detalle',
   templateUrl: './detalle.component.html',
@@ -23,8 +24,11 @@ export class DetalleComponent implements OnInit {
   fotoSeleccionada: any;
   progreso:number = 0;
 
-  constructor(private service: ServiceClienteService,
-    private route: ActivatedRoute) { }
+  constructor(
+    private service: ServiceClienteService,
+    private route: ActivatedRoute,
+    public authService: AuthService
+    ) { }
 
   
   ngOnInit(): void {

@@ -5,6 +5,7 @@ import { ServiceClienteService } from '../services/service-cliente.service';
 import Swal from 'sweetalert2'
 import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../../usuarios/auth.service';
 @Component({
   selector: 'app-listar-clientes',
   templateUrl: './listar-clientes.component.html',
@@ -20,8 +21,11 @@ export class ListarClientesComponent implements OnInit, OnChanges {
 
   detalle = 0;
 
-  constructor(private clienteService: ServiceClienteService,
-    private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private clienteService: ServiceClienteService,
+    private activatedRoute: ActivatedRoute,
+    public authService: AuthService
+    ) { }
 
   ngOnInit(): void {
     this.cargarClientes();
@@ -46,9 +50,9 @@ export class ListarClientesComponent implements OnInit, OnChanges {
       this.clienteService.getClientes(page)
       .pipe(
         tap(response => {
-          console.log("clienteC: tap");
+          
           (response.content as Cliente[]).forEach(cliente => {
-            console.log(cliente.foto);
+
           });
         })
       ).subscribe(response => {

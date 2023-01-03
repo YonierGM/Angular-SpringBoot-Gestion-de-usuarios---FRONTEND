@@ -16,12 +16,12 @@
           <p class="card-text">{{cliente.createAt}}</p>
           <p class="card-text">{{cliente.region.nombre}}</p>
          
-            <div class="input-group mb-3">
+            <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="input-group mb-3">
                 <input (change)="seleccionarFoto($event)" [(ngModel)]="file" #asFile type="file" class="form-control" id="inputGroupFile01">
             </div>
 
             <div class="botones">
-                <button (click)="subirFoto()" class="btn btn-info" [disabled]="!file">Subir foto</button>
+                <button *ngIf="authService.hasRole('ROLE_ADMIN')" (click)="subirFoto()" class="btn btn-info" [disabled]="!file">Subir foto</button>
                 <button class="btn btn-info" routerLink="/clientes/listar">Volver</button>
 
                 <div class="progress" *ngIf="progreso > 0">

@@ -85,13 +85,8 @@
                 </div>
             </div>
 
-            <div class="input-group mb-3">
-                <input (change)="seleccionarFoto($event)" [(ngModel)]="foto" name="foto" type="file" class="form-control" id="inputGroupFile01">
-            </div>
-            
-
             <div class="form-group">
-                <button class="btn w-100 mb-4" role="button" (click)="create()" *ngIf="!cliente.id else updateButton" [disabled]="!clienteForm.form.valid">Guardar</button>
+                <button class="btn w-100 mb-2" role="button" (click)="create()" *ngIf="!cliente.id else updateButton" [disabled]="!clienteForm.form.valid">Guardar</button>
                 <button class="btn w-100" routerLink="/clientes/listar">Volver</button>
 
                 <div class="progress" *ngIf="progreso > 0">
@@ -101,7 +96,7 @@
                 </div>
 
                 <ng-template #updateButton>
-                    <button class="btn w-100" role="button" (click)="update()" [disabled]="!clienteForm.form.valid">Editar</button>
+                    <button class="btn w-100 mb-2" role="button" (click)="update()" [disabled]="!clienteForm.form.valid">Editar</button>
                 </ng-template>
             </div>
         </form>

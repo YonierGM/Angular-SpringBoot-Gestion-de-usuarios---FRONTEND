@@ -9,12 +9,24 @@
           <li class="nav-item">
             <a class="nav-link" routerLink="/clientes/listar" [routerLinkActive]="'active'">Listar</a>
           </li>
-          <li class="nav-item">
+          <li *ngIf="authService.hasRole('ROLE_ADMIN')" class="nav-item">
             <a class="nav-link" routerLink="/clientes/form" [routerLinkActive]="'active'">Crear</a>
           </li>
         </ul>
         <ul class="navbar-nav navbar-right">
-          <li><a [routerLink]="['/login']" class="btn" [routerLinkActive]="'active'">Login</a></li>
+          <li *ngIf="!authService.isAuthenticated()"><a [routerLink]="['/login']" class="btn btn-outline-primary" [routerLinkActive]="'active'">Login</a></li>
+
+          <div *ngIf="authService.isAuthenticated()" class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{authService.usuario.username}}
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <button (click)="logout()" class="dropdown-item" type="submit">Cerrar</button>
+              </li>
+            </ul>
+          </div>
+
         </ul>
       </div>
     </div>

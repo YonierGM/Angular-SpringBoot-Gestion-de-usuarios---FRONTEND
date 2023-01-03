@@ -64,75 +64,11 @@ export class FormularioComponent implements OnInit {
     })
   }
 
-  seleccionarFoto(event:any){
-    this.fotoSeleccionada = event.target.files[0];
-    this.progreso = 0;
-
-    if(this.fotoSeleccionada.type.indexOf('image') < 0){
-      Swal.fire({
-        title: 'Tipo de archivo',
-        text: 'Seleccione un archivo de tipo Imagen',
-        icon: 'error',
-        confirmButtonText: 'Ok',
-        confirmButtonColor: '#3F51B5'
-      });
-      this.fotoSeleccionada = null;
-    }
-
-    console.log(this.fotoSeleccionada);
-  }
-
-  subirFoto(){
-    if(!this.fotoSeleccionada){
-      Swal.fire({
-        title: 'Error',
-        text: 'La foto no se ha cargado',
-        icon: 'error',
-        confirmButtonText: 'Ok',
-        confirmButtonColor: '#3F51B5'
-      });
-
-    }else{
-      this.clienteService.subirFoto(this.fotoSeleccionada, this.cliente.id).
-      subscribe(event => {
-        //this.cliente = cliente;
-        if(event.type === HttpEventType.UploadProgress){
-
-          if(event.total)
-          this.progreso = Math.round((event.loaded/event.total)*100);
-
-          //Asigno progreso a 0 para que desaparezca
-          setTimeout(()=>{
-            this.progreso = 0;
-          }, 2000);
-
-          //Limpiamos el input
-          this.foto = '';
-          
-        }else if(event.type === HttpEventType.Response){
-          let response:any = event.body;
-          this.cliente = response.cliente as Cliente; 
-          
-          Swal.fire({
-            title: 'Foto cargada',
-            text: 'La foto ha sido subida con exito',
-            icon: 'success',
-            confirmButtonText: 'Ok',
-            confirmButtonColor: '#3F51B5'
-          });
-        }
-      });
-    }
-  }
-
-  
   public create(): void {
       this.clienteService.create(this.cliente).subscribe({
         next: (v) => {
-          
-          this.subirFoto();
 
-          this.router.navigate([''])
+          this.router.navigate(['/clientes/listar'])
 
           Swal.fire({
             title: ''+this.cliente.nombre,
@@ -155,7 +91,7 @@ export class FormularioComponent implements OnInit {
     this.clienteService.update(this.cliente)
     .subscribe({
       next: (v) => {
-        this.router.navigate([''])
+        this.router.navigate(['/clientes/listar'])
         Swal.fire({
           title: ''+this.cliente.nombre,
           text: 'Cliente '+this.cliente.nombre + ' actualizado con exito',
