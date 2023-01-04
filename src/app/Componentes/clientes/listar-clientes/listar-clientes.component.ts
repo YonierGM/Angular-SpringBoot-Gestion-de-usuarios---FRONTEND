@@ -12,6 +12,8 @@ import { AuthService } from '../../../usuarios/auth.service';
   styleUrls: ['./listar-clientes.component.css']
 })
 export class ListarClientesComponent implements OnInit, OnChanges {
+ 
+  public loading: any = 0;
 
   urlBaseImage: String = "http://localhost:8080/api/uploads/img/";
 
@@ -39,6 +41,7 @@ export class ListarClientesComponent implements OnInit, OnChanges {
   }
 
   cargarClientes(){
+    this.loading = 1;
     
     this.activatedRoute.paramMap.subscribe( (params:any) => {
       let page:number = +params.get('page');
@@ -55,9 +58,22 @@ export class ListarClientesComponent implements OnInit, OnChanges {
 
           });
         })
-      ).subscribe(response => {
-        this.clientes = response.content as Cliente[];
-        this.paginador = response;
+      ).subscribe({
+
+        next: (v) => {
+
+          this.clientes = v.content as Cliente[];
+          this.paginador = v;
+        }, 
+        error: (e) => {
+          console.error(e)
+        },
+
+        complete: () =>{
+          console.info('complete')
+          this.loading = 0;
+   
+        } 
       });
     });
   }
@@ -74,6 +90,7 @@ export class ListarClientesComponent implements OnInit, OnChanges {
       cancelButtonText: 'Volver'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loading = 1;
         this.clienteService.delete(cliente.id).subscribe(
           
           res => {
@@ -83,6 +100,7 @@ export class ListarClientesComponent implements OnInit, OnChanges {
               'El registro ha sido eliminado',
               'success'
             )
+            this.loading = 0;
           }
         )
       }

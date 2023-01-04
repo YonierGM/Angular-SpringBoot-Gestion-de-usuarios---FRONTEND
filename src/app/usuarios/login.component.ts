@@ -11,6 +11,8 @@ import swal from 'sweetalert2';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  public loading: any = 0;
+
   titulo: string = "Iniciar sesion";
 
   usuario: Usuario;
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
   } 
 
   login(): void {
+    this.loading = 1;
     console.log(this.usuario)
     
     if(this.usuario.username == "" || this.usuario.password == ""){
@@ -63,8 +66,10 @@ export class LoginComponent implements OnInit {
           swal.fire('Login','Datos incorrectos, verifique por favor','error');
         }
       },
-      complete: () => console.info('complete')
-  })
-
+      complete: () => {
+        this.loading = 0;
+        console.info('complete')
+      }
+   })
   }
 }

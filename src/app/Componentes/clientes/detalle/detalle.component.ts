@@ -12,7 +12,7 @@ import { AuthService } from '../../../usuarios/auth.service';
   styleUrls: ['./detalle.component.css']
 })
 export class DetalleComponent implements OnInit {
-  
+  public loading:any = 0;
   //input file
   file: any;
 
@@ -32,11 +32,13 @@ export class DetalleComponent implements OnInit {
 
   
   ngOnInit(): void {
+    this.loading = 1;
     this.route.paramMap.subscribe((params:any) => {
       let id:number = +params.get('id');
 
       if(id){
         this.service.getCliente(id).subscribe(cliente => {
+          this.loading = 0;
           this.cliente = cliente;
         });
       }

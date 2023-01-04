@@ -1,8 +1,15 @@
 
-<div class="contenedor">
-    <div class="header">
-        <app-header></app-header>
+<div class="header">
+    <app-header></app-header>
+</div>
+    <div class="spinner" *ngIf="loading == 1">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
     </div>
+    
+<div class="contenedor" *ngIf="loading == 0">
+
     <div class="contenido">
         <!-- <button (click)="mostrar=!mostrar" class="btn btn-primary ">{{mostrar==false? 'Ocultar': 'Mostrar'}}</button>
        -->
@@ -62,6 +69,7 @@
         <ng-template #mensaje>
             <h1 class="alert mensaje">No hay registros para mostrar</h1>
         </ng-template>
+
     <div>
         <app-paginator *ngIf="paginador" [paginador] = "paginador"></app-paginator>
     </div>

@@ -7,10 +7,15 @@ import { HeaderComponent } from './Componentes/header/header.component';
 import { FooterComponent } from './Componentes/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 
+//Interceptors
+import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
+import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
+//
+
 import localeES from '@angular/common/locales/es'
 
 //Necesario para la comunicacion http api - frontend
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpInterceptor } from '@angular/common/http';
 
 //
 import { ListarClientesComponent } from './Componentes/clientes/listar-clientes/listar-clientes.component';
@@ -18,7 +23,6 @@ import { FormularioComponent } from './Componentes/clientes/formulario/formulari
 //
 import {registerLocaleData } from '@angular/common';
 import { PaginatorComponent } from './Componentes/paginator/paginator.component';
-
 
 
 //Idioma local
@@ -51,7 +55,11 @@ import { LoginComponent } from './usuarios/login.component';
   ],
 
   //Locale_id configurar idioma local
-  providers: [{provide: LOCALE_ID, useValue: 'es' }],
+  providers: [
+    {provide: LOCALE_ID, useValue: 'es' },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

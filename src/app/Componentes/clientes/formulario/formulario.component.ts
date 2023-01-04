@@ -13,6 +13,7 @@ import { Region } from '../../regiones/region';
   styleUrls: ['./formulario.component.css']
 })
 export class FormularioComponent implements OnInit {
+  public loading: any = 0;
 
   nombre?:string;
   apellido?:string;
@@ -42,9 +43,20 @@ export class FormularioComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.cargarCliente();
-
+    let ruta = "/clientes/form"
+    
     this.ServiceRegionService.getRegiones().subscribe(regiones  => this.regiones = regiones)
+
+    if(this.router.url == ruta){
+      this.loading = 0;
+    }else{
+      this.cargarCliente();
+    }
+  }
+
+  formEdit(){
+    this.router.navigate(['/clientes/form/:id'])
+    this.cargarCliente();
   }
 
   compareRegion(o1: Region, o2: Region): boolean {
@@ -55,16 +67,23 @@ export class FormularioComponent implements OnInit {
   }
 
   public cargarCliente(): void{
+    this.loading = 1;
     this.activatedRoute.params.subscribe(params => {
       let id = params['id']
       if(id){
         this.titulo = "Editar Registro"
-        this.clienteService.getCliente(id).subscribe( (cliente) => this.cliente = cliente )
+        this.clienteService.getCliente(id).subscribe( (cliente) => {
+          this.loading = 0;
+          this.cliente = cliente 
+        }
+         )
       }
     })
   }
 
   public create(): void {
+    this.loading = 1;
+
       this.clienteService.create(this.cliente).subscribe({
         next: (v) => {
 
@@ -83,11 +102,15 @@ export class FormularioComponent implements OnInit {
           console.error(e)
         },
 
-        complete: () => console.info('complete') 
+        complete: () =>{
+          console.info('complete')
+          this.loading = 0;
+        } 
     })
   }
 
   update(): void{
+    this.loading = 1;
     this.clienteService.update(this.cliente)
     .subscribe({
       next: (v) => {
@@ -104,7 +127,11 @@ export class FormularioComponent implements OnInit {
         this.errores = e.error.errors as string[];
         console.error(e)
       },
-      complete: () => console.info('complete') 
+      complete: () => {
+        console.info('complete') 
+        this.loading = 0;
+
+      } 
     })
   }
 }
