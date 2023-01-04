@@ -1,33 +1,22 @@
 <div class="header">
     <app-header></app-header>
 </div>
+    <div class="spinner" *ngIf="loading">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
 
-<div class="spinner" *ngIf="loading == 1">
-    <div class="bounce1"></div>
-    <div class="bounce2"></div>
-    <div class="bounce3"></div>
-</div>
-
-<div class="contenedor">
-    <div class="contenido contenidoForm">
-        <ul class="alert alert-danger" *ngIf="errores?.length > 0">
-            <li *ngFor="let err of errores">
-                {{ err }}
-            </li>
-        </ul>
-        <form class="formulario" #clienteForm="ngForm">
-            <div class="titulo">
-                <h1>{{titulo}}</h1>
-            </div>
+<section class="contenedor">
+    <section class="formulario">
+        <h1>{{titulo}}</h1>
+        <form class="form" #clienteForm="ngForm">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Ingrese nombres" [(ngModel)]="cliente.nombre" name="nombre" #nombre="ngModel" required> <!--  required minlength="4" -->
               <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
                 <div *ngIf="nombre.hasError('required')">
                     <p class="alert alert-danger">El nombre es requerido</p> 
                 </div>
-                <!-- <div *ngIf="nombre.hasError('minlength')">
-                    <p class="alert alert-danger">El nombre debe contener minimo 4 letras</p> 
-                </div> -->
               </div>
             </div>
         
@@ -38,9 +27,6 @@
                     <div *ngIf="apellido.hasError('required')">
                         <p class="alert alert-danger">El apellido es requerido</p> 
                     </div>
-                    <!-- <div *ngIf="apellido.hasError('minlength')">
-                        <p class="alert alert-danger">El apellido debe contener minimo 3 letras</p> 
-                    </div> -->
                 </div>
             </div>
         
@@ -107,9 +93,9 @@
                 </ng-template>
             </div>
         </form>
-    </div>
-    <div class="footer">
-        <app-footer></app-footer>
-    </div>
-</div>
-
+    </section>
+    
+        <aside class="aside">
+        <img src="../../../../assets/images/Registro.jpg" alt="">
+        </aside>
+</section>
