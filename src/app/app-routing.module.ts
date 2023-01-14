@@ -10,7 +10,7 @@ import { RoleGuard } from './usuarios/guards/role.guard';
 const routes: Routes = [
 
   {path: '', redirectTo: 'clientes/listar', pathMatch: 'full'},
-  {path: 'clientes/listar', component: ListarClientesComponent},
+  {path: 'clientes/listar', component: ListarClientesComponent, canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_USER','ROLE_ADMIN'] }},
   {path: 'clientes/page/:page', component: ListarClientesComponent},
   {path: 'clientes/form', component: FormularioComponent, canActivate: [AuthGuard,RoleGuard], data: { role: ['ROLE_ADMIN'] }},
   {path: 'clientes/form/:id', component: FormularioComponent , canActivate: [AuthGuard, RoleGuard], data: { role: ['ROLE_ADMIN'] }},

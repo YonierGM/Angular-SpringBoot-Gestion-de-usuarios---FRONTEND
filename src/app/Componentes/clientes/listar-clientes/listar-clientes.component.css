@@ -1,10 +1,10 @@
 .contenido{
+    width: 95%;
     margin: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
-}
-
+}   
 .mensaje{
     text-align: center;
     color: white;
@@ -68,3 +68,12 @@
 
     object-fit: cover;
 }
+
+
+@media (max-width: 768px) {
+    .campo, .crearClientebtn {
+      display: none;
+      position: absolute;
+    }
+  }
+

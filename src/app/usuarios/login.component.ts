@@ -13,7 +13,7 @@ import swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   public loading: any = 0;
 
-  titulo: string = "Iniciar sesion";
+  titulo: string = "Iniciar sesión";
 
   usuario: Usuario;
 
@@ -59,15 +59,16 @@ export class LoginComponent implements OnInit {
 
         this.router.navigate(['/clientes/listar'])
         swal.fire('Login',`hola ${usuario.username}, has iniciado sesion `,'success')
+        this.loading = 0;
       }, 
       error: (e) => {
         console.error(e)
         if(e.status == 400){
           swal.fire('Login','Datos incorrectos, verifique por favor','error');
+          this.loading = 0;
         }
       },
       complete: () => {
-        this.loading = 0;
         console.info('complete')
       }
    })

@@ -72,3 +72,15 @@ button:hover{
     height: 100vh;
     object-fit: cover;
 }
+
+@media (max-width: 768px) {
+    .aside {
+      display: none;
+    }
+
+    .contenedor{
+        grid-template-columns: 1fr;
+        grid-template-areas: "formulario"
+    
+    }
+  }

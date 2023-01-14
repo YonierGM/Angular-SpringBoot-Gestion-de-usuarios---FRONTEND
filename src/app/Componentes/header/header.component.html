@@ -1,32 +1,18 @@
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/clientes/listar">Gestion de usuarios</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/clientes/listar" [routerLinkActive]="'active'">Listar</a>
-          </li>
-          <li *ngIf="authService.hasRole('ROLE_ADMIN')" class="nav-item">
-            <a class="nav-link" routerLink="/clientes/form" [routerLinkActive]="'active'">Crear</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav navbar-right">
-          <li *ngIf="!authService.isAuthenticated()"><a [routerLink]="['/login']" class="btn btn-outline-primary" [routerLinkActive]="'active'">Login</a></li>
+<nav id="my-first">
+  <ul>
+      <li class="logotype">
+          <a href="#">
+            Gestion de usuarios
+          </a>
+      </li>
+      <li class="burger" (click)="toggleMenu()">
+          <i class="material-icons">{{ isMenuOpen ? "close" : "menu" }}</i>
+      </li>
+      <li class="menu" [class.is-open]="isMenuOpen">
+        <a *ngIf="authService.hasRole('ROLE_ADMIN')" class="menu-item" routerLink="/clientes/form" [routerLinkActive]="'active'">Crear</a>
+        <a *ngIf="authService.isAuthenticated()" class="menu-item" routerLink="/clientes/listar" [routerLinkActive]="'active'">Listar</a>
+        <a *ngIf="authService.isAuthenticated()" (click)="logout()" class="menu-item"> Cerrar sesion</a>
+      </li>
+  </ul>
 
-          <div *ngIf="authService.isAuthenticated()" class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{authService.usuario.username}}
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <button (click)="logout()" class="dropdown-item" type="submit">Cerrar</button>
-              </li>
-            </ul>
-          </div>
-        </ul>
-      </div>
-    </div>
-  </nav>
+</nav>

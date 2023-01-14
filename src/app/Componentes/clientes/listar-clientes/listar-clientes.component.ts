@@ -12,7 +12,9 @@ import { AuthService } from '../../../usuarios/auth.service';
   styleUrls: ['./listar-clientes.component.css']
 })
 export class ListarClientesComponent implements OnInit, OnChanges {
- 
+  
+  displayedColumns: string[] = ['nombre','apellido','email','createAt'];
+
   public loading: any = 0;
 
   urlBaseImage: String = "http://localhost:8080/api/uploads/img/";
@@ -64,6 +66,8 @@ export class ListarClientesComponent implements OnInit, OnChanges {
 
           this.clientes = v.content as Cliente[];
           this.paginador = v;
+
+          console.log(this.paginador)
         }, 
         error: (e) => {
           console.error(e)

@@ -1,4 +1,102 @@
-.collapse{
+
+/*//////////////////////////////////////// */
+li{
+    list-style: none;
+}
+#my-first {
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+#my-first ul {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    
+}
+
+.cerrar{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.a{
+    position: relative;
+}
+
+#my-first .logotype a {
+    padding: 0 8px;
+    font-size: 1.4rem;
+    text-decoration: none;
+    color: #3f51b5;
+}
+
+#my-first .burger {
+    padding: 0 10px;
+    border-left: 1px solid #eee;
+    display: none;
+    cursor: pointer;
+}
+
+
+#my-first .burger i {
+    color: #999;
+    line-height: 60px;
+}
+
+.btn:hover{
+    color: #fff !important;
+}
+.menu-item{
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+    #my-first .burger {
+        display: block;
+    }
+
+    #my-first ul {
+        padding: 0;
+    }
+}
+
+#my-first .menu {
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+
+@media (max-width: 768px) {
+    #my-first .menu {
+        display: none;
+    }
+
+    #my-first .menu.is-open {
+        display: block;
+        position: absolute;
+        top: 62px;
+        background: #fff;
+        width: 100%;
+        padding: 5px;
+    }
+
+    #my-first .menu.is-open .menu-item {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 8px;
+    }
+}
+
+#my-first .menu .menu-item {
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    text-decoration: none;
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #454545;
 }

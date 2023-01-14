@@ -7,6 +7,11 @@ import { HeaderComponent } from './Componentes/header/header.component';
 import { FooterComponent } from './Componentes/footer/footer.component';
 import { FormsModule } from '@angular/forms';
 
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+
 //Interceptors
 import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
 import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
@@ -32,6 +37,7 @@ import { DetalleComponent } from './Componentes/clientes/detalle/detalle.compone
 import { ListarComponent } from './Componentes/regiones/listar/listar.component';
 import { CrearComponent } from './Componentes/regiones/crear/crear.component';
 import { LoginComponent } from './usuarios/login.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -51,7 +57,14 @@ import { LoginComponent } from './usuarios/login.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
+    
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
 
   //Locale_id configurar idioma local

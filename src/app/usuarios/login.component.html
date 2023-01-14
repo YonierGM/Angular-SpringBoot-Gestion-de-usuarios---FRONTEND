@@ -7,20 +7,32 @@
 </div>
 
 <section class="contenedor">
-    <section class="formulario">
-        <h1>{{titulo}}</h1>
-      <form class="form">
-          <div class="form-group">
-            <input type="text" name="username" class="form-control" placeholder="username" [(ngModel)]="usuario.username">
-          </div>
-          <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="Contraseña" [(ngModel)]="usuario.password">
-          </div>
-          <button type="submit" class="btn w-100 mt-2" (click)="login()">Ingresar</button>
-      </form>
-    </section>
-  
-      <aside class="aside">
-        <img src=".../../../../../assets/images/fondoAside.jpg" alt="">
-      </aside>
+  <section class="formulario">
+    <h1>{{titulo}}</h1>
+    <form class="form">
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Username" name="username" [(ngModel)]="usuario.username">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>password</mat-label>
+        <input matInput type="password" placeholder="password" name="password" [(ngModel)]="usuario.password">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" (click)="login()">Ingresar</button>
+      
+    </form>
   </section>
+
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+    <path fill="#4A4FB5" fill-opacity="1"
+      d="M0,128L24,117.3C48,107,96,85,144,96C192,107,240,149,288,165.3C336,181,384,171,432,165.3C480,160,528,160,576,149.3C624,139,672,117,720,138.7C768,160,816,224,864,240C912,256,960,224,1008,208C1056,192,1104,192,1152,170.7C1200,149,1248,107,1296,96C1344,85,1392,107,1416,117.3L1440,128L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z">
+    </path>
+  </svg>
+
+  <aside class="aside">
+    <img src=".../../../../../assets/images/fondoAside.jpg" alt="">
+  </aside>
+</section>

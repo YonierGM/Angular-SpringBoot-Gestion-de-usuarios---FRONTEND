@@ -9,11 +9,14 @@ body{
     display: grid;
     width: 100%;
     height: 100vh;
+    row-gap: 10px;
 
-    grid-template-rows: repeat(2, auto);
-    grid-template-columns: (1fr);
+    grid-template-columns: repeat(5);
 
-    grid-template-areas: "contenido"
+    grid-template-areas: "header"
+                         "crearClientebtn"
+                         "contenido"
+                         "paginador"
                          "footer";
 }
 
@@ -21,16 +24,28 @@ body{
     grid-area: header;
 }
 
+.contenedor>.crearClientebtn{
+    width: 90;
+    margin: auto;
+    grid-area: crearClientebtn;
+}
+
 .contenedor>.contenido{
     grid-area: contenido;
-    width: 90%;
-    margin: auto;
+}
+
+.contenedor>.paginador{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    grid-area: paginador;
 }
 
 .contenedor>.footer{
     grid-area: footer;
-    bottom: 0;
 }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
