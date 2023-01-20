@@ -87,8 +87,10 @@ export class FormularioComponent implements OnInit {
       this.clienteService.create(this.cliente).subscribe({
         next: (v) => {
 
-          this.router.navigate(['/clientes/listar'])
+          this.loading = 0;
 
+          this.router.navigate(['/clientes/listar'])
+          
           Swal.fire({
             title: ''+this.cliente.nombre,
             text: 'Cliente '+this.cliente.nombre + ' creado con exito',
@@ -96,6 +98,7 @@ export class FormularioComponent implements OnInit {
             confirmButtonText: 'Ok',
             confirmButtonColor: '#3F51B5'
           })
+          
         }, 
         error: (e) => {
           this.errores = e.error.errors as string[];
@@ -104,7 +107,6 @@ export class FormularioComponent implements OnInit {
 
         complete: () =>{
           console.info('complete')
-          this.loading = 0;
         } 
     })
   }
@@ -114,6 +116,7 @@ export class FormularioComponent implements OnInit {
     this.clienteService.update(this.cliente)
     .subscribe({
       next: (v) => {
+        this.loading = 0;
         this.router.navigate(['/clientes/listar'])
         Swal.fire({
           title: ''+this.cliente.nombre,
@@ -129,8 +132,6 @@ export class FormularioComponent implements OnInit {
       },
       complete: () => {
         console.info('complete') 
-        this.loading = 0;
-
       } 
     })
   }
