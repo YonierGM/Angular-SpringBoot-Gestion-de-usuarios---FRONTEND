@@ -11,6 +11,13 @@
 
 }
 
+.formulario .form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .contenedor >.formulario{
     grid-area: formulario;
     width: 90%;
@@ -21,38 +28,6 @@
 
     align-items: center;
     justify-content: center;
-}
-
-.formulario .form{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.form-control{
-    border: none;
-    border-bottom: 1px solid #3F51B5;
-    transition: .3s;
-    border-radius: 0;
-}
-
-.form-control:focus{
-    border-bottom: 1px solid #b53fb3;
-    box-shadow: none;
-    border-radius: 5px;
-}
-
-button{
-    background: #3F51B5;
-    height: 50px;
-    color: white;
-    transition: .5s;
-}
-
-button:hover{
-    background: #b53fb3;;
-    color: white;
 }
 
 .contenedor >.aside{
@@ -67,10 +42,17 @@ button:hover{
 
     overflow: hidden;
 }
+
 .aside img{
     width: 100%;
     height: 100vh;
     object-fit: cover;
+}
+
+.mat-list-item{
+    background: #F44336;
+    border-radius: 30px;
+    color: white;
 }
 
 @media (max-width: 768px) {
@@ -81,6 +63,5 @@ button:hover{
     .contenedor{
         grid-template-columns: 1fr;
         grid-template-areas: "formulario"
-    
     }
   }

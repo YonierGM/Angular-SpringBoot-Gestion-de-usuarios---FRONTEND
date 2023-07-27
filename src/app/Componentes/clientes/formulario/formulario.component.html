@@ -1,100 +1,120 @@
 <div class="header">
     <app-header></app-header>
 </div>
-    <div class="spinner" *ngIf="loading">
-        <div class="bounce1"></div>
-        <div class="bounce2"></div>
-        <div class="bounce3"></div>
-    </div>
+
+<div class="spinner" *ngIf="loading">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
 
 <section class="contenedor">
     <section class="formulario">
         <h1>{{titulo}}</h1>
         <form class="form" #clienteForm="ngForm">
 
+            <mat-list role="list" *ngIf="errores.length > 0">
+                <mat-list-item role="listitem" *ngFor="let err of errores">{{ err }}</mat-list-item>
+            </mat-list>
+
             <mat-form-field class="example-full-width">
                 <mat-label>Nombre</mat-label>
-                <input matInput placeholder="Nombre" name="nombre" [(ngModel)]="cliente.nombre" #nombre="ngModel" required>
+                <input matInput placeholder="Nombre" name="nombre" [(ngModel)]="cliente.nombre" #nombre="ngModel"
+                    required>
             </mat-form-field>
             <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
                 <div *ngIf="nombre.hasError('required')">
-                    <p class="alert alert-danger">El nombre es requerido</p> 
+                    <p class="alert alert-danger">El nombre es requerido</p>
                 </div>
             </div>
 
             <mat-form-field class="example-full-width">
                 <mat-label>Apellidos</mat-label>
-                <input matInput placeholder="Apellidos" name="apellido" [(ngModel)]="cliente.apellido" #apellido="ngModel" required>
+                <input matInput placeholder="Apellidos" name="apellido" [(ngModel)]="cliente.apellido"
+                    #apellido="ngModel" required>
             </mat-form-field>
             <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
                 <div *ngIf="apellido.hasError('required')">
-                    <p class="alert alert-danger">El apellido es requerido</p> 
+                    <p class="alert alert-danger">El apellido es requerido</p>
                 </div>
             </div>
-        
 
             <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input matInput placeholder="Email" name="email" [(ngModel)]="cliente.email" #email="ngModel" email required>
+                <input matInput placeholder="Email" name="email" [(ngModel)]="cliente.email" #email="ngModel" email
+                    required>
             </mat-form-field>
             <div *ngIf="email.invalid && (email.dirty || email.touched)">
                 <div *ngIf="email.hasError('required')">
-                    <p class="alert alert-danger">El email es requerido</p> 
+                    <p class="alert alert-danger">El email es requerido</p>
                 </div>
                 <div *ngIf="email.hasError('email')">
-                    <p class="alert alert-danger">email invalido</p> 
+                    <p class="alert alert-danger">email invalido</p>
                 </div>
             </div>
 
-            <mat-form-field class="example-full-width">
-                <mat-label>Nacimiento</mat-label>
-                <input type="date" matInput placeholder="Nacimiento" [(ngModel)]="cliente.createAt" name="createAt" #createAt="ngModel" required>
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="cliente.createAt" name="createAt"
+                #createAt="ngModel" required>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <div *ngIf="createAt.invalid && (createAt.dirty || createAt.touched)">
                 <div *ngIf="createAt.hasError('required')">
-                    <p class="alert alert-danger">La fecha es requerida</p> 
+                    <p class="alert alert-danger">La fecha es requerida</p>
                 </div>
                 <div *ngIf="createAt.hasError('createAt')">
-                    <p class="alert alert-danger">Fecha invalida</p> 
+                    <p class="alert alert-danger">Fecha invalida</p>
                 </div>
             </div>
 
-            <div class="form-group">
-                <select class="form-select" [compareWith]="compareRegion" [(ngModel)]="cliente.region" name="region" #region="ngModel" required>
-                    <option [ngValue]="undefined">--- elije una región ---</option>
-                    <option *ngFor="let region of regiones" [ngValue]="region">
-                        {{region.nombre}}
-                    </option>
-                </select>
-            </div>
-<!-- 
-            <mat-form-field appearance="fill">
-                <mat-label>Select an option</mat-label>
-                <mat-select disableRipple [compareWith]="compareRegion" [(ngModel)]="cliente.region" name="region" #region="ngModel" required>
-                  <mat-option *ngFor="let region of regiones" value="region">
-                    {{region.nombre}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field> -->
+            <form>
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Seleccione una región</mat-label>
+                    <mat-select [compareWith]="compareRegion" [(ngModel)]="cliente.region" #region="ngModel"
+                        name="region" required>
+                        <mat-option *ngFor="let region of regiones" [value]="region">
+                            {{region.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div *ngIf="region.invalid && (region.dirty || region.touched)">
+                    <div *ngIf="region.hasError('required')">
+                        <p class="alert alert-danger">La región es requerida</p>
+                    </div>
+                </div>
+            </form>
 
             <div class="form-group">
-                <button class="btn w-100 mb-2" role="button" (click)="create()" *ngIf="!cliente.id else updateButton" [disabled]="!clienteForm.form.valid || loading">Guardar</button>
-                <button class="btn w-100" routerLink="/clientes/listar">Volver</button>
+                <button mat-raised-button class="w-100 mb-2" color="primary" (click)="create()"
+                    *ngIf="!cliente.id else updateButton" [disabled]="!clienteForm.form.valid">Guardar</button>
+                <button mat-raised-button (click)="volver()" color="warn" class="w-100">Volver</button>
 
                 <div class="progress" *ngIf="progreso > 0">
-                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-label="Example with label" [ngStyle]="{'width': progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                        aria-label="Example with label" [ngStyle]="{'width': progreso+'%'}"
+                        attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">
                         {{progreso}}%
                     </div>
                 </div>
 
                 <ng-template #updateButton>
-                    <button class="btn w-100 mb-2" role="button" (click)="update()" [disabled]="!clienteForm.form.valid || loading ">Editar</button>
+                    <button mat-raised-button class="w-100 mb-2" color="primary" (click)="update()" [disabled]="!clienteForm.form.valid">Editar</button>
                 </ng-template>
             </div>
         </form>
     </section>
-    
-        <aside class="aside">
+
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#4A4FB5" fill-opacity="1"
+          d="M0,128L24,117.3C48,107,96,85,144,96C192,107,240,149,288,165.3C336,181,384,171,432,165.3C480,160,528,160,576,149.3C624,139,672,117,720,138.7C768,160,816,224,864,240C912,256,960,224,1008,208C1056,192,1104,192,1152,170.7C1200,149,1248,107,1296,96C1344,85,1392,107,1416,117.3L1440,128L1440,320L1416,320C1392,320,1344,320,1296,320C1248,320,1200,320,1152,320C1104,320,1056,320,1008,320C960,320,912,320,864,320C816,320,768,320,720,320C672,320,624,320,576,320C528,320,480,320,432,320C384,320,336,320,288,320C240,320,192,320,144,320C96,320,48,320,24,320L0,320Z">
+        </path>
+    </svg>
+
+    <aside class="aside">
         <img src="../../../../assets/images/Registro.jpg" alt="">
-        </aside>
+    </aside>
 </section>

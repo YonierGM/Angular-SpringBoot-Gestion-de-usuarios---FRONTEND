@@ -1,4 +1,3 @@
-
 <div class="spinner" *ngIf="loading == 1">
     <div class="bounce1"></div>
     <div class="bounce2"></div>
@@ -12,48 +11,10 @@
     </div>
 
     <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="form-group crearClientebtn">
-        <button routerLink="/clientes/form" class="btn">Crear cliente</button>
+        <button mat-raised-button routerLink="/clientes/form" color="primary">Crear cliente</button>
     </div>
 
     <div class="contenido" *ngIf="clientes.length > 0 else mensaje">
-
-        <!-- <div class="card" *ngFor="let cliente of clientes">
-            <div class="card-header columImg" *ngIf="authService.isAuthenticated() && cliente.foto"
-                [routerLink]="['/clientes/ver/', cliente.id]">
-                <img src="{{urlBaseImage}}{{cliente.foto}}" alt="">
-            </div>
-
-            <div class="card-header img" *ngIf="!cliente.foto">
-                <img class="card-img-top perfil" src="https://img.freepik.com/vector-premium/vector-diseno-icono-avatar-persona-uso-multiple-ilustracion-vectorial_625349-280.jpg?w=360" alt="Card image cap">
-            </div>
-            <div class="card-body">
-                <div class="nombre">
-                    <p>{{cliente.nombre | uppercase }} {{cliente.apellido | uppercase}}</p>
-                </div>
-                <div class="datos">
-                    <p>{{cliente.email | lowercase}}</p>
-                    <p>{{cliente.createAt | date:'fullDate'}}</p>
-                </div>
-                <section class="opciones">
-                    <div *ngIf="authService.isAuthenticated()">
-                        <button type="button" class="btn btn-ver" [routerLink]="['/clientes/ver/', cliente.id]">
-                            <i class="fa-sharp fa-solid fa-eye"></i>
-                        </button>
-                    </div>
-                    <div *ngIf="authService.hasRole('ROLE_ADMIN')">
-                        <button type="button" class="btn btn-edit" [routerLink]="['/clientes/form/', cliente.id]">
-                            <i class="fa-solid fa-user-pen"></i>
-                        </button>
-                    </div>
-                    <div *ngIf="authService.hasRole('ROLE_ADMIN')">
-                        <button class="btn btn-delete" (click)="delete(cliente)">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </section>
-            </div>
-        </div> -->
-
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -62,39 +23,48 @@
                     <th scope="col" class="campo">Apellidos</th>
                     <th scope="col" class="campo">Email</th>
                     <th scope="col" class="campo">Fecha</th>
-                    <th *ngIf="authService.hasRole('ROLE_ADMIN')" scope="col">Editar</th>
-                    <th *ngIf="authService.hasRole('ROLE_ADMIN')" scope="col">Eliminar</th>
+                    <th scope="col" class="campo">Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let cliente of clientes">
-                    <th *ngIf="authService.isAuthenticated()" class="columImg" [routerLink]="['/clientes/ver/', cliente.id]">
+                    <th *ngIf="authService.isAuthenticated()" class="columImg"
+                        [routerLink]="['/clientes/ver/', cliente.id]">
                         <div class="card-header img" *ngIf="cliente.foto">
-                            <img class="card-img-top perfil" alt="Perfil" src="{{urlBaseImage}}{{cliente.foto}}" alt="Card image cap">
+                            <img class="card-img-top perfil" alt="Perfil" src="{{urlBaseImage}}{{cliente.foto}}"
+                                alt="Card image cap">
                         </div>
-                
+
                         <div class="card-header img" *ngIf="!cliente.foto">
-                            <img class="card-img-top perfil" src="https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png" alt="Card image cap">
+                            <img class="card-img-top perfil"
+                                src="https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"
+                                alt="Card image cap">
                         </div>
                     </th>
-                    <td>{{cliente.nombre | uppercase }}</td>
-                    <td class="campo">{{cliente.apellido | uppercase}}</td>
-                    <td class="campo">{{cliente.email | lowercase}}</td>
-                    <td class="campo">{{cliente.createAt | date:'fullDate'}}</td>
-                    <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                        <button type="button" class="btn btn-edit" [routerLink]="['/clientes/form/', cliente.id]">
-                            <i class="fa-solid fa-user-pen"></i>    
-                        </button>
+                    <td>
+                        <p>{{cliente.nombre | uppercase }}</p>
                     </td>
-                    <td *ngIf="authService.hasRole('ROLE_ADMIN')">
-                        <button class="btn btn-delete" (click)="delete(cliente)">
+                    <td class="campo">
+                        <p>{{cliente.apellido | uppercase}}</p>
+                    </td>
+                    <td class="campo">
+                        <p>{{cliente.email | lowercase}}</p>
+                    </td>
+                    <td class="campo">
+                        <p>{{cliente.createAt | date:'fullDate'}}</p>
+                    </td>
+                    <td class="opciones">
+                        <button *ngIf="authService.hasRole('ROLE_ADMIN')" mat-raised-button routerLink="/clientes/form" color="primary" [routerLink]="['/clientes/form/', cliente.id]">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </button>
+
+                        <button *ngIf="authService.hasRole('ROLE_ADMIN')" mat-raised-button color="warn" (click)="delete(cliente)">
                             <i class="fa-solid fa-trash"></i>
                         </button>
                     </td>
                 </tr>
             </tbody>
-            </table>
-
+        </table>
     </div>
 
     <ng-template #mensaje>
@@ -109,4 +79,3 @@
         <app-footer></app-footer>
     </div>
 </div>
-

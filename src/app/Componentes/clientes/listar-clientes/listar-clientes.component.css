@@ -1,15 +1,24 @@
 .contenido{
-    width: 95%;
+    /* width: 95%;
     margin: auto;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 20px; */
+
+    display: grid;
+    place-items: center;
 }   
+
+.table {
+    max-width: 70%;
+}
+
 .mensaje{
     text-align: center;
     color: white;
     background: #636eb0;
 }
+
 
 .contenido > .btn{
     height: 60px;
@@ -25,24 +34,18 @@
     width: 100%;
 }
 
-.form-group > button{
-    background: #3F51B5;
-    height: 40px;
-    color: white;
-    transition: .5s;
+.opciones{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0;
+    gap: 2px;
+    height: 100px;
+    width: 100%;
 }
 
-.form-group > button:hover{
-    background: #b53fb3;
-}
-
-.btn-edit, .btn-ver{
-    background: #3F51B5;
-    color: white;
-}
-.btn-delete{
-    background: #b53fb3;
-    color: white;
+.opciones button{
+    height: 50%;
 }
 
 .img{

@@ -1,4 +1,4 @@
-import { Region } from '../regiones/region';
+import { Region } from './region';
 export class Cliente {
 
     constructor(
@@ -7,7 +7,7 @@ export class Cliente {
         public createAt?: string,
         public email?: string,
         public foto?: string,
-        public region?: Region,
+        public region?: string,
         
         public id?: number
     ){

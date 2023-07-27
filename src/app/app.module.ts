@@ -12,6 +12,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
+
 
 //Interceptors
 import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
@@ -35,8 +40,6 @@ import { PaginatorComponent } from './Componentes/paginator/paginator.component'
 registerLocaleData( localeES, 'es');
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DetalleComponent } from './Componentes/clientes/detalle/detalle.component';
-import { ListarComponent } from './Componentes/regiones/listar/listar.component';
-import { CrearComponent } from './Componentes/regiones/crear/crear.component';
 import { LoginComponent } from './usuarios/login.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
@@ -49,8 +52,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FormularioComponent,
     PaginatorComponent,
     DetalleComponent,
-    ListarComponent,
-    CrearComponent,
     LoginComponent
   ],
   imports: [
@@ -66,7 +67,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatIconModule,
+    MatListModule
+
   ],
 
   //Locale_id configurar idioma local
